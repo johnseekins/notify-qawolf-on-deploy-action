@@ -52,6 +52,7 @@ async function runGitHubAction() {
   const { environmentId, runId } = deployResult;
   core.setOutput("environment-id", environmentId);
   core.setOutput("run-id", runId);
+  core.setOutput("run-url", `https://app.qawolf.com/runs/${runId}`);
 }
 
 runGitHubAction().catch((error) => {
