@@ -50,13 +50,13 @@ async function runGitHubAction() {
     return;
   }
 
-  const { environmentId, runId, waitOnResults } = deployResult;
+  const { environmentId, runId } = deployResult;
   core.setOutput("environment-id", environmentId);
   core.setOutput("run-id", runId);
   const runUrl = runId ? new URL(`/runs/${runId}`, qawolfBaseUrl).href : undefined;
   core.setOutput("run-url", runUrl);
 
-  if (runId && waitOnResults) {
+  if (runId && deployConfig.waitOnResults) {
     const { outcome } = await pollCiGreenlightStatus({
       runId,
     });
