@@ -60,11 +60,6 @@ export function validateInput(
       required: false,
     }) || relevantEventData?.pullRequestNumber;
 
-  const waitOnResults =
-    core.getInput("wait-on-results", {
-      required: false
-    });
-
   if (!shaInput && !branchInput && !deploymentTypeInput) {
     return {
       error:
