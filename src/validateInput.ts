@@ -130,7 +130,6 @@ export function validateInput(
       },
       sha: shaInput,
       variables: validatedEnvironmentVariables,
-      waitOnResults: waitOnResults,
     },
     isValid: true,
     ...(ephemeralEnvironmentInput === "true"
