@@ -59,6 +59,10 @@ A pull request number associated with the deployment, if applicable.
 
 The ID of the newly created run. Notice that for preview deployments, no run is automatically initiated and therefore no `run-id` will be available.
 
+### `environment-id`
+
+The environment ID the newly created run is running against. Notice that for preview deployments, no run is automatically initiated and therefore no `environment-id` will be available.
+
 ### `run-url`
 
 The fully qualified URL of the newly created run (e.g. `https://app.qawolf.com/runs/<run-id>`). Notice that for preview deployments, no run is automatically initiated and therefore no `run-url` will be available.
