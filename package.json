@@ -13,7 +13,7 @@
     "lint:non-fixable": "dpdm --exit-code circular:1 --no-tree --no-warning --transform --include='.*' --exclude='/(dist|node_modules)/' '**/*'",
     "test": "NODE_OPTIONS=\"--experimental-vm-modules\" NODE_NO_WARNINGS=1 jest --passWithNoTests",
     "test:watch": "npm run test -- --watch",
-    "tsc:check": "tsc"
+    "tsc:check": "tsc --noEmit"
   },
   "dependencies": {
     "@actions/core": "^2.0.3",
@@ -25,9 +25,21 @@
     "zod": "^4.1.11"
   },
   "devDependencies": {
-    "esbuild": "^0.25.9"
+    "@eslint/js": "^10.0.1",
+    "@swc/core": "^1.15.33",
+    "@swc/jest": "^0.2.39",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^25.9.1",
+    "dpdm": "^4.2.0",
+    "esbuild": "^0.25.9",
+    "eslint": "^10.4.0",
+    "globals": "^17.6.0",
+    "jest": "^30.4.2",
+    "prettier": "^3.8.3",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.59.4"
   },
   "engines": {
-    "node": ">=22.22.0 <25"
+    "node": ">=24"
   }
 }

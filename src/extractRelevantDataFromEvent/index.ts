@@ -6,6 +6,7 @@ import type {
   PullRequestEvent,
   PushEvent,
 } from "@octokit/webhooks-types";
+import { stringifyUnknown } from "@qawolf/ci-utils";
 
 import { env } from "../env.js";
 
@@ -41,14 +42,16 @@ export const extractRelevantDataFromEvent = async (
       }
     }
   } catch (error) {
-    core.debug(`Failed to extract event data: ${error}`);
+    core.debug(
+      `Failed to extract event data: ${stringifyUnknown(error) ?? "Unknown error"}`,
+    );
     return undefined;
   }
 };
 
-export const extractRelevantDataFromPullRequest = async (
+export const extractRelevantDataFromPullRequest = (
   context: typeof github.context,
-): Promise<RelevantEventData> => {
+): RelevantEventData => {
   const event = context.payload as PullRequestEvent;
   return {
     branch: event.pull_request.head.ref,
@@ -168,7 +171,9 @@ async function fetchPullRequestData(
 
     return "no-pull-request";
   } catch (error) {
-    core.info(`Failed to fetch pull request data: ${error}`);
+    core.info(
+      `Failed to fetch pull request data: ${stringifyUnknown(error) ?? "Unknown error"}`,
+    );
     return "fail-to-fetch-pull-request-data";
   }
 }

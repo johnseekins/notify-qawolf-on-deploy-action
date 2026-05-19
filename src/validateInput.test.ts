@@ -19,7 +19,8 @@ const defaultInputs = {
 jest.unstable_mockModule("@actions/github", () => ({
   context: mockContext,
 }));
-const mockGetInput = jest.fn<(name: string) => any>();
+const mockGetInput =
+  jest.fn<(name: string, options?: { required?: boolean }) => string>();
 jest.unstable_mockModule("@actions/core", () => ({
   error: jest.fn(),
   getInput: mockGetInput,
@@ -33,7 +34,7 @@ describe("validateInput", () => {
   const mockInputs = (overrides: Record<string, string | undefined> = {}) => {
     mockGetInput.mockImplementation((name) => {
       return name in overrides
-        ? overrides[name]
+        ? (overrides[name] ?? "")
         : defaultInputs[name as keyof typeof defaultInputs];
     });
   };

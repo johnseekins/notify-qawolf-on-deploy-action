@@ -39,9 +39,11 @@ describe("extractRelevantDataFromEvent", () => {
         sha: mockPullRequest.head.sha,
       },
     };
-    mockSearchIssuesAndPullRequests.mockImplementationOnce(async () => ({
-      data: { items: [] },
-    }));
+    mockSearchIssuesAndPullRequests.mockImplementationOnce(() =>
+      Promise.resolve({
+        data: { items: [] },
+      }),
+    );
 
     const result = await extractRelevantDataFromEvent(github.context);
 
@@ -63,9 +65,11 @@ describe("extractRelevantDataFromEvent", () => {
         },
       },
     };
-    mockSearchIssuesAndPullRequests.mockImplementationOnce(async () => ({
-      data: { items: [] },
-    }));
+    mockSearchIssuesAndPullRequests.mockImplementationOnce(() =>
+      Promise.resolve({
+        data: { items: [] },
+      }),
+    );
 
     const result = await extractRelevantDataFromEvent(github.context);
 
