@@ -20,7 +20,7 @@ async function runGitHubAction() {
     return;
   }
   const { apiKey, deployConfig, qawolfBaseUrl } = validationResult;
-  const { attemptNotifyDeploy } = makeQaWolfSdk(
+  const { attemptNotifyDeploy, pollCiGreenlightStatus } = makeQaWolfSdk(
     {
       apiKey,
       serviceBase: qawolfBaseUrl,
@@ -50,11 +50,21 @@ async function runGitHubAction() {
     return;
   }
 
-  const { environmentId, runId } = deployResult;
+  const { environmentId, runId, waitOnResults } = deployResult;
   core.setOutput("environment-id", environmentId);
   core.setOutput("run-id", runId);
   const runUrl = runId ? new URL(`/runs/${runId}`, qawolfBaseUrl).href : undefined;
   core.setOutput("run-url", runUrl);
+
+  if (runId && waitOnResults) {
+    const { outcome } = await pollCiGreenlightStatus({
+      runId,
+    });
+    if (outcome !== 'success') {
+      core.setFailed(`Test Suite failed: ${outcome}`);
+    }
+    core.info(`Run Details: ${runUrl}`);
+  }
 }
 
 runGitHubAction().catch((error) => {
