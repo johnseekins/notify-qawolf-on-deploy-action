@@ -61,7 +61,7 @@ The ID of the newly created run. Notice that for preview deployments, no run is 
 
 ### `run-url`
 
-The fully qualified URL of the newly created run (e.g. `https://app.qawolf.com/runs/<run-id>`). Notice that for preview deployments, no run is automatically initiated and therefore no `run-id` will be available.
+The fully qualified URL of the newly created run (e.g. `https://app.qawolf.com/runs/<run-id>`). Notice that for preview deployments, no run is automatically initiated and therefore no `run-url` will be available.
 
 ## Usage
 
