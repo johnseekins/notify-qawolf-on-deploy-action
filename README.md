@@ -33,6 +33,10 @@ JSON-formatted environment variables for the deployment to be tested.
 
 Whether the deployment is an ephemeral environment
 
+### `wait-on-results`
+
+Whether to poll for test suite completion before completing the job
+
 ## Auto-Extracted Inputs (Optional)
 
 The following inputs are automatically extracted from the GitHub event context. They only need to be specified if you want to override the default values.
