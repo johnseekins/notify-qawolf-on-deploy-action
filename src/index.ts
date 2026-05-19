@@ -52,7 +52,7 @@ async function runGitHubAction() {
   const { environmentId, runId } = deployResult;
   core.setOutput("environment-id", environmentId);
   core.setOutput("run-id", runId);
-  const runUrl = runId ? new URL(`/runs/${runId}`, qawolfBaseUrl).href : undefined);
+  const runUrl = runId ? new URL(`/runs/${runId}`, qawolfBaseUrl).href : undefined;
   core.setOutput("run-url", runUrl);
 }
 
