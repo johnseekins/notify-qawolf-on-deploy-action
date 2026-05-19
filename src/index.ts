@@ -49,6 +49,7 @@ async function runGitHubAction() {
     );
     return;
   }
+
   const { environmentId, runId } = deployResult;
   core.setOutput("environment-id", environmentId);
   core.setOutput("run-id", runId);

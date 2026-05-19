@@ -60,6 +60,11 @@ export function validateInput(
       required: false,
     }) || relevantEventData?.pullRequestNumber;
 
+  const waitOnResults =
+    core.getInput("wait-on-results", {
+      required: false
+    });
+
   if (!shaInput && !branchInput && !deploymentTypeInput) {
     return {
       error:
@@ -130,6 +135,7 @@ export function validateInput(
       },
       sha: shaInput,
       variables: validatedEnvironmentVariables,
+      waitOnResults: waitOnResults,
     },
     isValid: true,
     ...(ephemeralEnvironmentInput === "true"
