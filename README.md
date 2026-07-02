@@ -144,7 +144,7 @@ jobs:
 
 ### Trigger action on `deployment_status` events
 
-This workflow is ideal for setups using third-party deployment services (like Vercel, Netlify, or Heroku) that automatically create GitHub deployment statuses. Unlike the `push` or `pull_request` triggers that require you to manage the deployment process (and wait for the deployment to complete), this trigger responds directly to deployment status updates from your hosting provider.
+This workflow is ideal for setups using third-party deployment services that automatically create GitHub deployment statuses. Unlike the `push` or `pull_request` triggers that require you to manage the deployment process (and wait for the deployment to complete), this trigger responds directly to deployment status updates from your hosting provider.
 
 [GitHub Docs: `deployment_status` events](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#deployment_status)
 

@@ -129,6 +129,31 @@ describe("validateInput", () => {
     });
   });
 
+  // attemptNotifyDeploy branches on `"ephemeralEnvironment" in config`, so the
+  // flag must live inside deployConfig (not on the result wrapper), and the
+  // config must not be GitHub-shaped.
+  it("should build an ephemeral deploy config when ephemeral-environment is true", () => {
+    mockInputs({ "ephemeral-environment": "true" });
+    const result = validateInput(undefined);
+    if (!result.isValid) throw Error("expected valid input");
+
+    expect("ephemeralEnvironment" in result.deployConfig).toBe(true);
+    expect(result.deployConfig.deploymentUrl).toBe("https://example.com");
+    expect(result).not.toHaveProperty("ephemeralEnvironment");
+    expect(result.deployConfig).not.toHaveProperty("hostingService");
+  });
+
+  it("should reject ephemeral-environment without a deployment-url", () => {
+    mockInputs({ "deployment-url": "", "ephemeral-environment": "true" });
+    const result = validateInput(undefined);
+
+    expect(result).toEqual({
+      error:
+        "'deployment-url' input is required when 'ephemeral-environment' is true",
+      isValid: false,
+    });
+  });
+
   it("should validate using extracted relevant event data", () => {
     mockInputs({
       branch: "",
