@@ -115,14 +115,43 @@ export function validateInput(
   const rawQawolfBaseUrl = core.getInput("qawolf-base-url").trim();
   const qawolfBaseUrl = rawQawolfBaseUrl || undefined;
 
+  const baseDeployConfig = {
+    branch: branchInput,
+    commitUrl: validatedCommitUrl,
+    deduplicationKey: deduplicationKeyInput,
+    deploymentType: deploymentTypeInput,
+    deploymentUrl: validatedDeploymentUrl,
+    sha: shaInput,
+    variables: validatedEnvironmentVariables,
+  };
+
+  // An ephemeral deployment is identified by the `ephemeralEnvironment` flag
+  // living on the deploy config itself: attemptNotifyDeploy branches on
+  // `"ephemeralEnvironment" in config`. It also requires a deployment URL.
+  if (ephemeralEnvironmentInput === "true") {
+    if (!validatedDeploymentUrl) {
+      return {
+        error:
+          "'deployment-url' input is required when 'ephemeral-environment' is true",
+        isValid: false,
+      };
+    }
+    return {
+      apiKey: qawolfApiKey,
+      deployConfig: {
+        ...baseDeployConfig,
+        deploymentUrl: validatedDeploymentUrl,
+        ephemeralEnvironment: true,
+      },
+      isValid: true,
+      qawolfBaseUrl,
+    };
+  }
+
   return {
     apiKey: qawolfApiKey,
     deployConfig: {
-      branch: branchInput,
-      commitUrl: validatedCommitUrl,
-      deduplicationKey: deduplicationKeyInput,
-      deploymentType: deploymentTypeInput,
-      deploymentUrl: validatedDeploymentUrl,
+      ...baseDeployConfig,
       hostingService: "GitHub",
       pullRequestNumber:
         pullRequestNumberInput !== undefined
@@ -137,9 +166,6 @@ export function validateInput(
       waitOnResults: waitOnResults,
     },
     isValid: true,
-    ...(ephemeralEnvironmentInput === "true"
-      ? { ephemeralEnvironment: true }
-      : {}),
     qawolfBaseUrl,
   };
 }

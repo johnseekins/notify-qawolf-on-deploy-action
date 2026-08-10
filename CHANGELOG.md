@@ -1,3 +1,7 @@
+## v2.0.1
+
+- Fix the `ephemeral-environment` input being ignored. Ephemeral deployments are now notified as ephemeral instead of as a regular GitHub deployment, and `deployment-url` is required when `ephemeral-environment` is `true`.
+
 ## v2.0.0
 
 - The action now runs on Node 24.
