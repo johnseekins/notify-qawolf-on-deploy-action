@@ -50,6 +50,18 @@ async function runGitHubAction() {
     return;
   }
 
+  if (deployResult.outcome === "skipped") {
+    // No trigger matched this deployment. This is deterministic given the
+    // current configuration, so it is a skip rather than a failure: the step
+    // passes without producing a run. WIZ-10858 tracks a fuller audit of this
+    // action's behavior.
+    core.info(
+      deployResult.skippedDeployment
+        ? `No QA Wolf run was created for this deployment: ${deployResult.skippedDeployment.message}`
+        : "No QA Wolf run was created for this deployment because no trigger matched. Nothing to test.",
+    );
+    return;
+  }
   const { environmentId, runId } = deployResult;
   core.setOutput("environment-id", environmentId);
   core.setOutput("run-id", runId);
